@@ -13,4 +13,8 @@ server.use("/api/auth", authRouter);
 server.use("/api/users", usersRouter);
 server.use("/api/food", foodRouter);
 
+server.get("/", (req, res) => {
+    res.status(200).json({api: "up and running"})
+})
+
 module.exports = server;
