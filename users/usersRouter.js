@@ -60,4 +60,25 @@ router.put("/:id", (req, res) => {
     });
 });
 
+// POST new food item for a specific user
+router.post("/:id/food", (req, res) => {
+  const id = req.params.id;
+  const food = req.body;
+
+  usersDB
+    .findByID(id)
+    .then((user) => {
+      if (user) {
+        usersDB.addFood(id, food).then((newFood) => {
+          res.status(201).json(newFood);
+        });
+      } else {
+        res.status(404).json({ error: "Couldn't find that user." });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({ error: "Failed to create a new food." });
+    });
+});
+
 module.exports = router;
