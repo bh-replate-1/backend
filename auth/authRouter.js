@@ -19,7 +19,7 @@ router.post("/register", (req, res) => {
         res.status(200).json({ message: "Welcome", email: email, token });
       })
       .catch((err) => {
-        res.status(500).json({ message: "Error" });
+        res.status(500).json({ message: err });
       });
   }
 });
