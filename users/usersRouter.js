@@ -30,4 +30,34 @@ router.get("/:id", (req, res) => {
     });
 });
 
+// Update (PUT) user by id
+router.put("/:id", (req, res) => {
+  const id = req.params.id;
+  const updates = req.body;
+
+  usersDB
+    .findByID(id)
+    .then((found) => {
+      if (found) {
+        usersDB
+          .update(id, updates)
+          .then((user) => {
+            res.status(200).json(user);
+          })
+          .catch((error) => {
+            res.status(500).json({
+              error: "Sorry, user could not be updated at this time.",
+            });
+          });
+      } else {
+        res.status(404).json({ message: "Sorry, that user doesn't exist." });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({
+        error: "There was an error finding the user. Please try again.",
+      });
+    });
+});
+
 module.exports = router;

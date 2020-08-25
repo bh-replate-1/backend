@@ -5,6 +5,7 @@ module.exports = {
   findByEmail,
   findAll,
   findByID,
+  update,
 };
 
 function insert(user) {
@@ -31,4 +32,13 @@ function findByID(id) {
     .where({ id })
     .select("id", "name", "email", "address", "phone", "company")
     .first();
+}
+
+function update(id, user) {
+  return db("users")
+    .where({ id })
+    .update(user)
+    .then((count) => {
+      return findByID(id);
+    });
 }
