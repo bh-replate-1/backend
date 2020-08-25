@@ -6,6 +6,7 @@ module.exports = {
   findAll,
   findByID,
   update,
+  addFood,
 };
 
 function insert(user) {
@@ -39,6 +40,22 @@ function update(id, user) {
     .where({ id })
     .update(user)
     .then((count) => {
+      return findByID(id);
+    });
+}
+
+function addFood(userID, food) {
+  const newFood = {
+    ...food,
+    user_id: userID,
+  };
+
+  return db("food")
+    .where({ user_id: userID })
+    .insert(newFood)
+    .then((ids) => {
+      const id = ids[0];
+
       return findByID(id);
     });
 }
