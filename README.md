@@ -13,6 +13,7 @@ CURRENT AUTH ENDPOINTS
 
 CURRENT USERS ENDPOINTS
 
+| Method | URL                  | Description                                                                                            |
 | ------ | --------------       | ------------------------------------------------------------------------------------------------------ |
 | GET    | /api/users/          | Returns an array of all Users.  User information is in JSON format.                                    |
 | GET    | /api/users/:id       | Selects a user by id.  Returns User information in JSON format.                                        |
@@ -22,6 +23,7 @@ CURRENT USERS ENDPOINTS
 
 CURRENT FOOD ENDPOINTS
 
+| Method | URL                  | Description                                                                                            |
 | ------ | --------------       | ------------------------------------------------------------------------------------------------------ |
 | GET    | /api/food/           | Returns an array of different food objects (JSON).                                                     |
 | GET    | /api/food/:id        | Returns the specified food in JSON format.                                                             |
