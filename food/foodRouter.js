@@ -1,14 +1,14 @@
 const express = require("express");
 
-const foodDB = require("../food/foodModel");
+const Food = require("../food/foodModel");
 const checkToken = require("../middleware/checkToken");
+const validateFood = require("../middleware/validateFood");
 
 const router = express();
 
 // GET all food items
 router.get("/", checkToken, (req, res) => {
-  foodDB
-    .findAll()
+  Food.findAll()
     .then((foodItems) => {
       res.status(200).json({ foodItems });
     })
@@ -17,12 +17,24 @@ router.get("/", checkToken, (req, res) => {
     });
 });
 
+// POST new food item
+router.post("/", checkToken, validateFood, (req, res) => {
+  const food = req.body;
+
+  Food.insert(food)
+    .then((newFood) => {
+      res.status(201).json(newFood);
+    })
+    .catch((error) => {
+      res.status(500).json({ error: "Failed to create a new food item." });
+    });
+});
+
 // GET food item by id
 router.get("/:id", checkToken, (req, res) => {
   const id = req.params.id;
 
-  foodDB
-    .findByID(id)
+  Food.findByID(id)
     .then((response) => {
       res.status(200).json(response);
     })
@@ -36,12 +48,10 @@ router.put("/:id", checkToken, (req, res) => {
   const id = req.params.id;
   const updates = req.body;
 
-  foodDB
-    .findByID(id)
+  Food.findByID(id)
     .then((found) => {
       if (found) {
-        foodDB
-          .update(id, updates)
+        Food.update(id, updates)
           .then((foodItem) => {
             res.status(200).json(foodItem);
           })
@@ -66,12 +76,10 @@ router.put("/:id", checkToken, (req, res) => {
 router.delete("/:id", checkToken, (req, res) => {
   const id = req.params.id;
 
-  foodDB
-    .findByID(id)
+  Food.findByID(id)
     .then((found) => {
       if (found) {
-        foodDB
-          .toggleComplete(id)
+        Food.toggleComplete(id)
           .then((foodItem) => {
             res.status(200).json(foodItem);
           })

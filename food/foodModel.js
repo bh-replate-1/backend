@@ -8,7 +8,7 @@ module.exports = {
   toggleComplete,
 };
 
-function insert(userID, food) {
+function insert(food) {
   return db("food")
     .insert(food)
     .then((ids) => {
@@ -19,9 +19,7 @@ function insert(userID, food) {
 }
 
 function findAll() {
-  return db("users")
-    .join("food", "users.id", "food.user_id")
-    .select("users.name", "food.*");
+  return db("food");
 }
 
 function findByID(id) {
