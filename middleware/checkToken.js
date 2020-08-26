@@ -14,7 +14,6 @@ module.exports = (req, res, next) => {
       } else {
         // token is valid
         req.decodedToken = decodedToken;
-        console.log("Decoded Token", req.decodedToken);
         next();
       }
     });
