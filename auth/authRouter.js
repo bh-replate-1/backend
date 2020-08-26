@@ -14,7 +14,6 @@ router.post("/register", validateUser, (req, res) => {
   usersDB
     .insert({ email, password: bcrypt.hashSync(password, 6) })
     .then((user) => {
-      console.log("Created user", user);
       const token = generateToken(user);
       res.status(201).json({
         message: "Welcome to our API. Here's the user's id, email and JWT",

@@ -1,5 +1,5 @@
 const db = require("../data/dbConfig.js");
-const foodDB = require("../food/foodModel");
+const Food = require("../food/foodModel");
 
 module.exports = {
   insert,
@@ -7,7 +7,6 @@ module.exports = {
   findAll,
   findByID,
   update,
-  addFood,
 };
 
 async function insert(user) {
@@ -44,19 +43,5 @@ function update(id, user) {
     .update(user)
     .then((count) => {
       return findByID(id);
-    });
-}
-
-function addFood(userID, food) {
-  const newFood = {
-    ...food,
-    user_id: userID,
-  };
-
-  return db("food")
-    .where({ user_id: userID })
-    .insert(newFood)
-    .then((id) => {
-      return foodDB.findByID(id);
     });
 }
