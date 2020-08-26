@@ -28,3 +28,14 @@ GET(https://bh-replate-1.herokuapp.com/api/users/1) -->
     "company": "Replate"
 } 
 
+
+Endpoints to add/fix 
+    -POST (Food)
+
+Documentation to add 
+-Food Router 
+    -GET("/") - All food
+    -GET("/:id") - Food by ID
+    -PUT("/:id") - Edit food entry
+
+    
