@@ -3,19 +3,21 @@ const foodDB = require("../food/foodModel");
 
 module.exports = {
   insert,
-  findByEmail,
+  findBy,
   findAll,
   findByID,
   update,
   addFood,
 };
 
-function insert(user) {
-  return db("users").insert(user);
+async function insert(user) {
+  const [id] = await db("users").insert(user);
+
+  return findByID(id);
 }
 
-function findByEmail(email) {
-  return db("users").where({ email }).first();
+function findBy(filter) {
+  return db("users").where(filter).first();
 }
 
 function findAll() {
