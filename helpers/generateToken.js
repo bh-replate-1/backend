@@ -3,6 +3,7 @@ const constants = require("../helpers/constants.js");
 
 function generateToken(user) {
   const payload = {
+    subject: user.id,
     email: user.email,
   };
 

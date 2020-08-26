@@ -1,11 +1,13 @@
 const express = require("express");
 
 const usersDB = require("./usersModel");
+const protected = require("../middleware/protected");
+const validateFood = require("../middleware/validateFood");
 
 const router = express();
 
 // GET all users
-router.get("/", (req, res) => {
+router.get("/", protected, (req, res) => {
   usersDB
     .findAll()
     .then((users) => {
@@ -17,7 +19,7 @@ router.get("/", (req, res) => {
 });
 
 // GET user by id
-router.get("/:id", (req, res) => {
+router.get("/:id", protected, (req, res) => {
   const id = req.params.id;
 
   usersDB
@@ -31,7 +33,7 @@ router.get("/:id", (req, res) => {
 });
 
 // Update (PUT) user by id
-router.put("/:id", (req, res) => {
+router.put("/:id", protected, (req, res) => {
   const id = req.params.id;
   const updates = req.body;
 
@@ -61,7 +63,7 @@ router.put("/:id", (req, res) => {
 });
 
 // POST new food item for a specific user
-router.post("/:id/food", (req, res) => {
+router.post("/:id/food", protected, validateFood, (req, res) => {
   const id = req.params.id;
   const food = req.body;
 

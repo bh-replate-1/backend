@@ -1,11 +1,12 @@
 const express = require("express");
 
 const foodDB = require("../food/foodModel");
+const protected = require("../middleware/protected");
 
 const router = express();
 
 // GET all food items
-router.get("/", (req, res) => {
+router.get("/", protected, (req, res) => {
   foodDB
     .findAll()
     .then((foodItems) => {
@@ -17,7 +18,7 @@ router.get("/", (req, res) => {
 });
 
 // GET food item by id
-router.get("/:id", (req, res) => {
+router.get("/:id", protected, (req, res) => {
   const id = req.params.id;
 
   foodDB
@@ -31,7 +32,7 @@ router.get("/:id", (req, res) => {
 });
 
 // Update (PUT) food item by id
-router.put("/:id", (req, res) => {
+router.put("/:id", protected, (req, res) => {
   const id = req.params.id;
   const updates = req.body;
 
