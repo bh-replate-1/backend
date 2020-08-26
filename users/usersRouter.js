@@ -1,15 +1,13 @@
 const express = require("express");
 
-const usersDB = require("./usersModel");
+const Users = require("./usersModel");
 const checkToken = require("../middleware/checkToken");
-const validateFood = require("../middleware/validateFood");
 
 const router = express();
 
 // GET all users
 router.get("/", checkToken, (req, res) => {
-  usersDB
-    .findAll()
+  Users.findAll()
     .then((users) => {
       res.status(200).json({ users });
     })
@@ -22,8 +20,7 @@ router.get("/", checkToken, (req, res) => {
 router.get("/:id", checkToken, (req, res) => {
   const id = req.params.id;
 
-  usersDB
-    .findByID(id)
+  Users.findByID(id)
     .then((user) => {
       res.status(200).json(user);
     })
@@ -37,12 +34,10 @@ router.put("/:id", checkToken, (req, res) => {
   const id = req.params.id;
   const updates = req.body;
 
-  usersDB
-    .findByID(id)
+  Users.findByID(id)
     .then((found) => {
       if (found) {
-        usersDB
-          .update(id, updates)
+        Users.update(id, updates)
           .then((user) => {
             res.status(200).json(user);
           })
@@ -59,27 +54,6 @@ router.put("/:id", checkToken, (req, res) => {
       res.status(500).json({
         error: "There was an error finding the user. Please try again.",
       });
-    });
-});
-
-// POST new food item for a specific user
-router.post("/:id/food", checkToken, validateFood, (req, res) => {
-  const id = req.params.id;
-  const food = req.body;
-
-  usersDB
-    .findByID(id)
-    .then((user) => {
-      if (user) {
-        usersDB.addFood(id, food).then((newFood) => {
-          res.status(201).json(newFood);
-        });
-      } else {
-        res.status(404).json({ error: "Couldn't find that user." });
-      }
-    })
-    .catch((error) => {
-      res.status(500).json({ error: "Failed to create a new food." });
     });
 });
 

@@ -9,11 +9,10 @@ exports.up = function (knex) {
     table
       .integer("user_id")
       .unsigned()
-      .notNullable()
       .references("id")
       .inTable("users")
       .onUpdate("cascade")
-      .onDelete("restrict");
+      .onDelete("cascade");
   });
 };
 
