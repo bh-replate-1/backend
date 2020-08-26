@@ -1,4 +1,5 @@
 const db = require("../data/dbConfig.js");
+const foodDB = require("../food/foodModel");
 
 module.exports = {
   insert,
@@ -53,9 +54,7 @@ function addFood(userID, food) {
   return db("food")
     .where({ user_id: userID })
     .insert(newFood)
-    .then((ids) => {
-      const id = ids[0];
-
-      return findByID(id);
+    .then((id) => {
+      return foodDB.findByID(id);
     });
 }
