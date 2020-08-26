@@ -4,20 +4,6 @@ const foodDB = require("../food/foodModel");
 
 const router = express();
 
-// // POST new food item
-// router.post("/", (req, res) => {
-//   const food = req.body;
-
-//   foodDB
-//     .insert(food)
-//     .then((newFood) => {
-//       res.status(201).json(newFood);
-//     })
-//     .catch((error) => {
-//       res.status(500).json({ error: error.message });
-//     });
-// });
-
 // GET all food items
 router.get("/", (req, res) => {
   foodDB

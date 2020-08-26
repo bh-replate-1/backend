@@ -18,7 +18,9 @@ function insert(userID, food) {
 }
 
 function findAll() {
-  return db("food");
+  return db("users")
+    .join("food", "users.id", "food.user_id")
+    .select("users.name", "food.*");
 }
 
 function findByID(id) {
