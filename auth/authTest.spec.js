@@ -30,5 +30,4 @@ describe("Auth Router Testing", () => {
     expect(res.status).toBe(200);
   });
 
-
 });
