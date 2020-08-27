@@ -3,7 +3,7 @@ const server = require("../api/server.js");
 const db = require("../data/dbConfig.js");
 
 describe("User Router Testing", () => {
-  it.skip("Returns correct unauthorized status code", () => {
+  it("Returns correct unauthorized status code", () => {
     return request(server)
       .get("/api/users")
       .then((res) => {
@@ -11,7 +11,7 @@ describe("User Router Testing", () => {
       });
   });
 
-  it.skip("Gets access to users list", async () => {
+  it("Gets access to users list", async () => {
     const login = await request(server)
       .post("/api/auth/login")
       .send({ email: "Replate29990", password: "Test" });
@@ -22,7 +22,7 @@ describe("User Router Testing", () => {
     expect(res.type).toBe("application/json");
   });
 
-  it.skip("Displays User 1's information", async () => {
+  it("Displays User 1's information", async () => {
     const login = await request(server)
       .post("/api/auth/login")
       .send({ email: "Replate29990", password: "Test" });
@@ -34,7 +34,7 @@ describe("User Router Testing", () => {
     expect(res.body).toHaveProperty("email", "Replate29990");
   });
 
-  it.skip("Edit User 1's information", async () => {
+  it("Edit User 1's information", async () => {
     const login = await request(server)
       .post("/api/auth/login")
       .send({ email: "Replate29990", password: "Test" });
