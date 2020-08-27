@@ -22,7 +22,11 @@ router.get("/:id", checkToken, (req, res) => {
 
   Users.findByID(id)
     .then((user) => {
-      res.status(200).json(user);
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        res.status(404).json({ message: "That user wasn't found." });
+      }
     })
     .catch((error) => {
       res.status(500).json({ error: error.message });
@@ -53,6 +57,33 @@ router.put("/:id", checkToken, (req, res) => {
     .catch((error) => {
       res.status(500).json({
         error: "There was an error finding the user. Please try again.",
+      });
+    });
+});
+
+// Delete user by id
+router.delete("/:id", checkToken, (req, res) => {
+  const id = req.params.id;
+
+  Users.findByID(id)
+    .then((found) => {
+      if (found) {
+        Users.removeUser(id)
+          .then((response) => {
+            res.status(204).end();
+          })
+          .catch((error) => {
+            res
+              .status(500)
+              .json({ error: "Sorry, that user couldn't be deleted." });
+          });
+      } else {
+        res.status(404).json({ message: "Sorry, that user doesn't exist." });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({
+        error: error.message,
       });
     });
 });

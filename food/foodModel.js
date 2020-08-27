@@ -5,7 +5,7 @@ module.exports = {
   findAll,
   findByID,
   update,
-  toggleComplete,
+  removeFood,
 };
 
 function insert(food) {
@@ -35,11 +35,6 @@ function update(id, food) {
     });
 }
 
-function toggleComplete(id) {
-  return db("food")
-    .where({ id })
-    .update({ completed: true })
-    .then((count) => {
-      return findByID(id);
-    });
+function removeFood(id) {
+  return db("food").where({ id }).delete();
 }

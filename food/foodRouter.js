@@ -35,8 +35,12 @@ router.get("/:id", checkToken, (req, res) => {
   const id = req.params.id;
 
   Food.findByID(id)
-    .then((response) => {
-      res.status(200).json(response);
+    .then((foodItem) => {
+      if (foodItem) {
+        res.status(200).json(foodItem);
+      } else {
+        res.status(404).json({ message: "That food item wasn't found." });
+      }
     })
     .catch((error) => {
       res.status(500).json({ error: error.message });
@@ -73,20 +77,21 @@ router.put("/:id", checkToken, (req, res) => {
     });
 });
 
+// Delete food item by id
 router.delete("/:id", checkToken, (req, res) => {
   const id = req.params.id;
 
   Food.findByID(id)
     .then((found) => {
       if (found) {
-        Food.toggleComplete(id)
-          .then((foodItem) => {
-            res.status(200).json(foodItem);
+        Food.removeFood(id)
+          .then((response) => {
+            res.status(204).end();
           })
           .catch((error) => {
             res
               .status(500)
-              .json({ error: "Sorry, the food item couldn't be updated." });
+              .json({ error: "Sorry, the food item couldn't be deleted." });
           });
       } else {
         res
@@ -96,7 +101,7 @@ router.delete("/:id", checkToken, (req, res) => {
     })
     .catch((error) => {
       res.status(500).json({
-        error: "There was an error finding that food item. Please try again.",
+        error: error.message,
       });
     });
 });
