@@ -7,6 +7,7 @@ module.exports = {
   findAll,
   findByID,
   update,
+  removeUser,
 };
 
 async function insert(user) {
@@ -44,4 +45,8 @@ function update(id, user) {
     .then((count) => {
       return findByID(id);
     });
+}
+
+function removeUser(id) {
+  return db("users").where({ id }).delete();
 }
