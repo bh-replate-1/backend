@@ -20,7 +20,7 @@ describe("User Router Testing", () => {
   it("Gets access to users list", async () => {
     const login = await request(server)
       .post("/api/auth/login")
-      .send({ email: "Replate5", password: "Test" });
+      .send({ email: "Replate29990", password: "Test" });
     const res = await request(server)
       .get("/api/users")
       .set("Authorization", login.body.token);
@@ -31,30 +31,30 @@ describe("User Router Testing", () => {
   it("Displays User 1's information", async () => {
     const login = await request(server)
       .post("/api/auth/login")
-      .send({ email: "Replate5", password: "Test" });
+      .send({ email: "Replate29990", password: "Test" });
     const res = await request(server)
       .get("/api/users/1")
       .set("Authorization", login.body.token);
     expect(res.status).toEqual(200);
     expect(res.body.id).toBe(1);
+    expect(res.body).toHaveProperty("email", "Replate29990");
   });
 
   it("Edit User 1's information", async () => {
     const login = await request(server)
       .post("/api/auth/login")
-      .send({ email: "Replate5", password: "Test" });
+      .send({ email: "Replate29990", password: "Test" });
     const res = await request(server)
       .put("/api/users/1")
       .send({
         name: "Rohith",
         email: "RohithisCool11!!",
         address: "Hello",
-        phone: null,
-        company: null,
       })
       .set("Authorization", login.body.token);
     expect(res.status).toEqual(200);
     expect(res.body.id).toBe(1);
     expect(res.body.name).toBe("Rohith");
+    expect(res.body).toHaveProperty("email", "RohithisCool11!!");
   });
 });
