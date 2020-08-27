@@ -3,35 +3,27 @@ const server = require("../api/server.js");
 const db = require("../data/dbConfig.js");
 
 
+//Use two different sets of credentials for first 2 tests (Create two new accounts which show successful registration and token response);  Use same pair of credentials for last 2 tests (These show successful login and token response)
 
-//beforeEach?  Does that rollback the db on heroku?  or just locally?  does a test db get recognized by heroku?  
-//beforeEach(async () => {
-    //await db("users").truncate();
-//})
+//First two and last two tests can be condensed into single tests... 
 
+//We can add a beforeall truncate feature to clear the DB ... so no need for two different sets of credentials when running a test suite OR condense .. will play around with that tomorrow 
 
 describe("Auth Router Testing", () => {
     it("Successful register returns a token", async () => {
         const res = await request(server)
         .post('/api/auth/register')
-        .send({ email: "Replate1", password: "Test" })
-        expect(res.body).toHaveProperty("message");
+        .send({ email: "Replate29990", password: "Test" })
+        expect(res.body).toHaveProperty("token");
     });
 
     it("Successful register returns correct status code", async () => {
         const res = await request(server)
         .post('/api/auth/register')
-        .send({ email: "Replate2", password: "Test" })
-        expect(res.status).toBe(200);
+        .send({ email: "Replate30000", password: "Test" })
+        expect(res.status).toBe(201);
     })
 
-    it("Successful login returns a token", async () => {
-        const res = await request(server)
-        .post('/api/auth/login')
-        .send({ email: "Replate1", password: "Test" })
-        expect(res.body).toHaveProperty("message");
-    })
-    
     it("Invalid credentials return correct status code", async () => {
         const res = await request(server)
         .post('/api/auth/login')
@@ -42,8 +34,16 @@ describe("Auth Router Testing", () => {
     it("Successful login returns correct status code", async () => {
         const res = await request(server)
         .post('/api/auth/login')
-        .send({ email: "Replate2", password: "Test" })
+        .send({ email: "Replate29990", password: "Test" })
         expect(res.status).toBe(200);
     })
+
+    it("Successful login returns a token", async () => {
+        const res = await request(server)
+        .post('/api/auth/login')
+        .send({ email: "Replate30000", password: "Test" })
+        expect(res.body).toHaveProperty("token");
+    })
 })
+
 
