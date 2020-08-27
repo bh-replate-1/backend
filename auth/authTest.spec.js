@@ -9,22 +9,22 @@ const db = require("../data/dbConfig.js");
 //We can add a beforeall truncate feature to clear the DB ... so no need for two different sets of credentials when running a test suite OR condense .. will play around with that tomorrow
 
 describe("Auth Router Testing", () => {
-  it("Successful register returns a token", async () => {
-    beforeEach(async () => {
-      await db("users").truncate();
-    });
+  beforeAll(async () => {
+    await db("users").truncate();
+  });
+  it("Successful register returns a token and correct status code", async () => {
     const res = await request(server)
       .post("/api/auth/register")
       .send({ email: "Replate29990", password: "Test" });
     expect(res.body).toHaveProperty("token");
-  });
-
-  it("Successful register returns correct status code", async () => {
-    const res = await request(server)
-      .post("/api/auth/register")
-      .send({ email: "Replate30000", password: "Test" });
     expect(res.status).toBe(201);
   });
+
+  // it("Successful register returns correct status code", async () => {
+  //   const res = await request(server)
+  //     .post("/api/auth/register")
+  //     .send({ email: "Replate30000", password: "Test" });
+  // });
 
   it("Invalid credentials return correct status code", async () => {
     const res = await request(server)
@@ -40,10 +40,10 @@ describe("Auth Router Testing", () => {
     expect(res.status).toBe(200);
   });
 
-  it("Successful login returns a token", async () => {
-    const res = await request(server)
-      .post("/api/auth/login")
-      .send({ email: "Replate30000", password: "Test" });
-    expect(res.body).toHaveProperty("token");
-  });
+  // it("Successful login returns a token", async () => {
+  //   const res = await request(server)
+  //     .post("/api/auth/login")
+  //     .send({ email: "Replate30000", password: "Test" });
+  //   expect(res.body).toHaveProperty("token");
+  // });
 });
